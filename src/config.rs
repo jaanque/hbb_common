@@ -115,6 +115,7 @@ const CHARS: &[char] = &[
 
 pub const RENDEZVOUS_SERVERS: &[&str] = &["91.126.218.4"];
 pub const RS_PUB_KEY: &str = "sL4Zgm7MUhXAjKrhAu5Zp4+YMxr6DxkXPhT866KbQ5k=";
+pub const API_SERVER: &str = "";
 
 pub const RENDEZVOUS_PORT: i32 = 21116;
 pub const RELAY_PORT: i32 = 21117;
