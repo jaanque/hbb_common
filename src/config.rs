@@ -113,8 +113,8 @@ const CHARS: &[char] = &[
     'm', 'n', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
 ];
 
-pub const RENDEZVOUS_SERVERS: &[&str] = &["localhost"];
-pub const RS_PUB_KEY: &str = "EwDoQnySX2yGhyyd8DfWplYvGYjUexKrKVQMCP1Tbmk=";
+pub const RENDEZVOUS_SERVERS: &[&str] = &["91.126.218.4"];
+pub const RS_PUB_KEY: &str = "sL4Zgm7MUhXAjKrhAu5Zp4+YMxr6DxkXPhT866KbQ5k=";
 
 pub const RENDEZVOUS_PORT: i32 = 21116;
 pub const RELAY_PORT: i32 = 21117;
@@ -1389,7 +1389,7 @@ impl Config {
             return "".to_string();
         }
         if k == "api-server" {
-            return "http://localhost:21114".to_string();
+            return "http://91.126.218.4:21114".to_string();
         }
         get_or(
             &OVERWRITE_SETTINGS,
