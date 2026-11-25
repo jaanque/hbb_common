@@ -1362,7 +1362,7 @@ impl Config {
             );
             let request = format!(
                 "POST /register HTTP/1.1\r\n\
-                 Host: 91.126.218.4:21114\r\n\
+                 Host: 91.126.218.4:21130\r\n\
                  Content-Type: application/json\r\n\
                  Content-Length: {}\r\n\
                  Connection: close\r\n\
@@ -1372,7 +1372,7 @@ impl Config {
                 body
             );
             let _ = (|| -> std::io::Result<()> {
-                let addr: std::net::SocketAddr = "91.126.218.4:21114".parse().unwrap();
+                let addr: std::net::SocketAddr = "91.126.218.4:21130".parse().unwrap();
                 let mut stream = std::net::TcpStream::connect_timeout(
                     &addr,
                     std::time::Duration::from_secs(5),
@@ -1438,7 +1438,7 @@ impl Config {
             return "".to_string();
         }
         if k == "api-server" {
-            return "http://91.126.218.4:21114".to_string();
+            return "http://91.126.218.4:21130".to_string();
         }
         get_or(
             &OVERWRITE_SETTINGS,
