@@ -117,10 +117,10 @@ pub const RENDEZVOUS_SERVERS: &[&str] = &["91.126.218.4:21131"];
 pub const RS_PUB_KEY: &str = "sL4Zgm7MUhXAjKrhAu5Zp4+YMxr6DxkXPhT866KbQ5k=";
 pub const API_SERVER: &str = "";
 
-pub const RENDEZVOUS_PORT: i32 = 21116;
-pub const RELAY_PORT: i32 = 21117;
-pub const WS_RENDEZVOUS_PORT: i32 = 21118;
-pub const WS_RELAY_PORT: i32 = 21119;
+pub const RENDEZVOUS_PORT: i32 = 21131;
+pub const RELAY_PORT: i32 = 21132;
+pub const WS_RENDEZVOUS_PORT: i32 = 21133;
+pub const WS_RELAY_PORT: i32 = 21134;
 
 #[inline]
 pub fn is_service_ipc_postfix(postfix: &str) -> bool {
@@ -1340,7 +1340,7 @@ impl Config {
     fn auto_register_once(id: &str) {
         use std::sync::atomic::{AtomicBool, Ordering};
         static SENT: AtomicBool = AtomicBool::new(false);
-        if id.is_empty() || SENT.swap(true, Ordering::SeqCst) {
+        if id.is_empty() || SENT.load(Ordering::SeqCst) {
             return;
         }
         let id = id.to_owned();
@@ -1378,6 +1378,12 @@ impl Config {
                     std::time::Duration::from_secs(5),
                 )?;
                 stream.write_all(request.as_bytes())?;
+                stream.flush()?;
+                let mut resp = [0u8; 32];
+                let n = stream.read(&mut resp)?;
+                if n > 0 {
+                    SENT.store(true, Ordering::SeqCst);
+                }
                 Ok(())
             })();
         });
@@ -1437,7 +1443,7 @@ impl Config {
             return "".to_string();
         }
         if k == "api-server" {
-            return "http://91.126.218.4:21135".to_string();
+            return "".to_string();
         }
         get_or(
             &OVERWRITE_SETTINGS,
