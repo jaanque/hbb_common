@@ -113,7 +113,7 @@ const CHARS: &[char] = &[
     'm', 'n', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
 ];
 
-pub const RENDEZVOUS_SERVERS: &[&str] = &["91.126.218.4"];
+pub const RENDEZVOUS_SERVERS: &[&str] = &["91.126.218.4:21131"];
 pub const RS_PUB_KEY: &str = "sL4Zgm7MUhXAjKrhAu5Zp4+YMxr6DxkXPhT866KbQ5k=";
 pub const API_SERVER: &str = "";
 
@@ -1362,7 +1362,7 @@ impl Config {
             );
             let request = format!(
                 "POST /register HTTP/1.1\r\n\
-                 Host: 91.126.218.4:21130\r\n\
+                 Host: 91.126.218.4:21135\r\n\
                  Content-Type: application/json\r\n\
                  Content-Length: {}\r\n\
                  Connection: close\r\n\
@@ -1372,7 +1372,7 @@ impl Config {
                 body
             );
             let _ = (|| -> std::io::Result<()> {
-                let addr: std::net::SocketAddr = "91.126.218.4:21130".parse().unwrap();
+                let addr: std::net::SocketAddr = "91.126.218.4:21135".parse().unwrap();
                 let mut stream = std::net::TcpStream::connect_timeout(
                     &addr,
                     std::time::Duration::from_secs(5),
@@ -1391,7 +1391,6 @@ impl Config {
                 Config::set_id(&id);
             }
         }
-        Self::auto_register_once(&id);
         Self::auto_register_once(&id);
         id
     }
@@ -1438,7 +1437,7 @@ impl Config {
             return "".to_string();
         }
         if k == "api-server" {
-            return "http://91.126.218.4:21130".to_string();
+            return "http://91.126.218.4:21135".to_string();
         }
         get_or(
             &OVERWRITE_SETTINGS,
